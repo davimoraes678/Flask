@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p><a href="{{ url_for('new_book') }}">Cadastrar novo livro</a></p>
+
+{% if biblioteca %}
+<table>
+  <thead>
+    <tr>
+      <th>ISBN</th>
+      <th>Título</th>
+      <th>Autor</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for l in biblioteca %}
+    <tr>
+      <td>{{ l.isbn }}</td>
+      <td>{{ l.titulo }}</td>
+      <td>{{ l.autor }}</td>
+      <td>{{ l.status }}</td>
+      <td class="actions">
+        <a href="{{ url_for('edit_book', isbn=l.isbn) }}">Editar</a>
+        <form class="inline" method="post" action="{{ url_for('delete_book', isbn=l.isbn) }}">
+          <button type="submit">Excluir</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Acervo vazio.</p>
+{% endif %}
+
+{% endblock %}
